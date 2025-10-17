@@ -11,36 +11,84 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ------------------ HIDE ALL STREAMLIT BRANDING + PROFILE PIC ------------------
+# ------------------ HIDE ALL STREAMLIT BRANDING INCLUDING BOTTOM PROFILE ------------------
 hide_streamlit_style = """
     <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-        .stDeployButton {display:none;}
-        div[data-testid="stToolbar"] {display: none;}
-        .stApp header {display: none;}
-        [data-testid="stHeader"] {display: none;}
-        button[kind="header"] {display: none;}
-        div[data-testid="stDecoration"] {display: none;}
-        .viewerBadge_link__qRIco {display: none;}
-        .viewerBadge_container__r5tak {display: none;}
-        header[data-testid="stHeader"] {display: none;}
-        .stApp > header {display: none;}
-        iframe {display: none;}
+        /* Hide main menu, footer, header */
+        #MainMenu {visibility: hidden !important;}
+        footer {visibility: hidden !important;}
+        header {visibility: hidden !important;}
         
-        /* Hide profile picture and user menu */
-        [data-testid="stHeaderActionElements"] {display: none;}
-        .stApp header [data-testid="stImage"] {display: none;}
-        button[kind="headerNoPadding"] {display: none;}
+        /* Hide all header elements */
+        .stApp > header {display: none !important;}
+        [data-testid="stHeader"] {display: none !important;}
+        div[data-testid="stToolbar"] {display: none !important;}
+        div[data-testid="stDecoration"] {display: none !important;}
+        div[data-testid="stStatusWidget"] {display: none !important;}
         
-        #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0rem;}
+        /* Hide Fork button and GitHub icon */
+        button[kind="header"] {display: none !important;}
+        button[kind="headerNoPadding"] {display: none !important;}
+        .viewerBadge_link__qRIco {display: none !important;}
+        .viewerBadge_container__r5tak {display: none !important;}
+        .styles_viewerBadge__CvC9N {display: none !important;}
+        
+        /* Hide profile picture and action elements */
+        [data-testid="stHeaderActionElements"] {display: none !important;}
+        .stApp header [data-testid="stImage"] {display: none !important;}
+        
+        /* Hide deploy button */
+        .stDeployButton {display: none !important;}
+        
+        /* Hide bottom profile section and "Created by" link */
+        .css-1dp5vir {display: none !important;}
+        .css-164nlkn {display: none !important;}
+        [data-testid="stSidebarUserContent"] {display: none !important;}
+        .stApp [data-testid="stBottomBlockContainer"] {display: none !important;}
+        div[data-testid="stBottom"] {display: none !important;}
+        
+        /* Hide any footer content including profile */
+        .reportview-container .main footer {display: none !important;}
+        footer {display: none !important;}
+        .footer {display: none !important;}
+        
+        /* Hide creator badge/profile at bottom */
+        a[href*="streamlit.io"] {display: none !important;}
+        a[href*="github.com"] {display: none !important;}
+        
+        /* Nuclear option for bottom elements */
+        .stApp > footer {display: none !important;}
+        [class*="viewerBadge"] {display: none !important;}
+        
+        /* Remove top padding */
+        .block-container {padding-top: 1rem !important;}
+        #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0rem !important;}
+        
+        /* Nuclear option - hide entire header container */
+        header[data-testid="stHeader"] {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            position: absolute !important;
+            top: -9999px !important;
+        }
+        
+        /* Hide any iframes */
+        iframe {display: none !important;}
+        
+        /* Hide streamlit branding watermark */
+        ._container_gzau3_1 {display: none !important;}
+        
+        /* Additional selectors for profile badge */
+        div[class*="UserBadge"] {display: none !important;}
+        div[class*="profileBadge"] {display: none !important;}
+        button[class*="UserBadge"] {display: none !important;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # ------------------ HIDDEN USER IDENTITY ------------------
-USERNAME = "Akansha"  # <-- this will be saved in background
+USERNAME = "Akansha"
 DATA_FILE = "messages.csv"
 
 # Create the data file if it doesn't exist
