@@ -89,14 +89,21 @@ import os
 st.set_page_config(
     page_title="Anonymous Message Box 💌",
     page_icon="💌",
-    layout="centered"
+    layout="centered",
+    initial_sidebar_state="collapsed"
 )
 
-# ------------------ HIDE STREAMLIT FOOTER & MENU ------------------
+# ------------------ HIDE ALL STREAMLIT BRANDING ------------------
 hide_streamlit_style = """
     <style>
-        #MainMenu {visibility: hidden;}  /* hides hamburger menu */
-        footer {visibility: hidden;}    /* hides "Made with Streamlit" footer */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        .stDeployButton {display:none;}
+        div[data-testid="stToolbar"] {display: none;}
+        .stApp header {display: none;}
+        [data-testid="stHeader"] {display: none;}
+        #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0rem;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
@@ -148,7 +155,7 @@ st.markdown(
 
 # ------------------ FRONTEND ------------------
 st.markdown("<h1>💌 Send me an Anonymous Message</h1>", unsafe_allow_html=True)
-st.write("Be honest, be kind, and say what’s on your mind anonymously ❤️")
+st.write("Be honest, be kind, and say what's on your mind anonymously ❤️")
 
 st.divider()
 
@@ -175,4 +182,3 @@ with st.expander("🔒 Admin Panel"):
         st.dataframe(df)
     elif password:
         st.error("Incorrect password ❌")
-
