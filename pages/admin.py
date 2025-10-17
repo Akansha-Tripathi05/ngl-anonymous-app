@@ -20,7 +20,11 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.title("🔒 Admin Dashboard")
 
-DATA_FILE = "messages.csv"
+import os
+
+# point to repo root where streamlit.py is
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_FILE = os.path.join(BASE_DIR, "messages.csv")
 
 # Initialize session state
 if 'authenticated' not in st.session_state:
