@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ------------------ HIDE ALL STREAMLIT BRANDING (INCLUDING FORK BUTTON) ------------------
+# ------------------ HIDE ALL STREAMLIT BRANDING + PROFILE PIC ------------------
 hide_streamlit_style = """
     <style>
         #MainMenu {visibility: hidden;}
@@ -28,6 +28,12 @@ hide_streamlit_style = """
         header[data-testid="stHeader"] {display: none;}
         .stApp > header {display: none;}
         iframe {display: none;}
+        
+        /* Hide profile picture and user menu */
+        [data-testid="stHeaderActionElements"] {display: none;}
+        .stApp header [data-testid="stImage"] {display: none;}
+        button[kind="headerNoPadding"] {display: none;}
+        
         #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0rem;}
     </style>
 """
@@ -96,46 +102,3 @@ with st.form("message_form", clear_on_submit=True):
             new_entry = pd.DataFrame([[timestamp, USERNAME, message]], columns=["timestamp", "username", "message"])
             new_entry.to_csv(DATA_FILE, mode="a", header=False, index=False)
             st.success("✅ Message sent successfully! Thanks for sharing 💫")
-
-st.divider()
-
-# ------------------ SECURE ADMIN SECTION (HIDDEN BY DEFAULT) ------------------
-# Initialize session state for admin authentication
-if 'admin_authenticated' not in st.session_state:
-    st.session_state.admin_authenticated = False
-
-# Only show admin panel after password is entered correctly
-if not st.session_state.admin_authenticated:
-    # Hidden admin login (use a secret URL parameter or just keep this hidden)
-    admin_password_input = st.text_input("🔒 Admin Access", type="password", key="admin_login", 
-                                         help="For admin use only", placeholder="Enter password")
-    
-    if admin_password_input:
-        if admin_password_input == "Akansha@2025":  # CHANGE THIS PASSWORD!
-            st.session_state.admin_authenticated = True
-            st.rerun()
-        else:
-            st.error("❌ Incorrect password")
-else:
-    # Admin is authenticated - show messages
-    st.success("✅ Admin authenticated")
-    
-    if st.button("🚪 Logout"):
-        st.session_state.admin_authenticated = False
-        st.rerun()
-    
-    st.subheader("📬 Received Messages")
-    
-    if os.path.exists(DATA_FILE):
-        df = pd.read_csv(DATA_FILE)
-        if len(df) > 0:
-            # Display messages in reverse order (newest first)
-            for idx, row in df.iloc[::-1].iterrows():
-                with st.container():
-                    st.markdown(f"**📅 {row['timestamp']}**")
-                    st.info(row['message'])
-                    st.divider()
-        else:
-            st.info("No messages yet 💌")
-    else:
-        st.info("No messages yet 💌")
